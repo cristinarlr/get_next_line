@@ -6,41 +6,27 @@
 /*   By: Cristina <Cristina@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 08:57:14 by Cristina          #+#    #+#             */
-/*   Updated: 2023/04/19 12:42:55 by Cristina         ###   ########.fr       */
+/*   Updated: 2023/04/19 15:46:22 by Cristina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char *ft_reserve_memory_heap(size_t count)
-{
-    char    *ptr;
 
-    printf("dentro de función ft_reserve_memory_heap\n");
-    ptr = (char *)malloc(count * sizeof(char));
-    if (!ptr)
-    {
-        printf("*******SE TRUNCÓ EL MALLOC********\n");
-        return (0);
-    }
-    return (ptr);
-}
-
-static char *ft_read_and_stock_in_buff(int fd, size_t buff_size)
+static char *ft_read_and_stock_in_stash(int fd, )
 {
     char    *buff;
     ssize_t nbytes;
 
-    printf("dentro de función ft_read_and_stock_in_buff\n");
-    printf("buff_size es = %zu\n", buff_size);
-    buff = ft_reserve_memory_heap(buff_size + 1);
-    nbytes = read(fd, buff, buff_size);
+    buff = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
+    if (!buff)
+        return (0);
+    nbytes = read(fd, buff, BUFFER_SIZE);
     if (nbytes == -1)
     {
-      perror("Error reading file");
-       exit(1);
+        printf("Error reading file");
+        return(0);
     }
-    
     printf("salió de read, nbytes = %zd\n", nbytes);
     printf("salió de read, buff = %s\n", buff);
     return (buff);
@@ -63,7 +49,7 @@ char *get_next_line(int fd)
    char *line;
 
     printf("BUFFER_SIZE es = %d\n", BUFFER_SIZE);
-    line = ft_read_and_stock_in_buff(fd, BUFFER_SIZE);
+    line = ft_read_and_stock_in_buff(fd);
     return (line);
 }
 
@@ -72,14 +58,14 @@ int main()
     int fd;
     char *result;
 
-    fd = open("41_no_nl", O_RDONLY);
+    fd = open("15char", O_RDONLY);
     if (fd == -1)
     {
-     perror("Error opening file");
+     printf("Error opening file");
      exit(1);
     }
     printf("fd = %d\n", fd);
     result = get_next_line(fd);
-    printf("%s", result);
+    printf("Result = %s", result);
     close(fd);
 }
