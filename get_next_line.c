@@ -6,26 +6,45 @@
 /*   By: crramire <crramire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 08:57:14 by Cristina          #+#    #+#             */
-/*   Updated: 2023/04/20 13:02:54 by crramire         ###   ########.fr       */
+/*   Updated: 2023/04/21 13:18:58 by crramire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
+char *ft_stash_clean_for_next_GNL(char *stash)
+{
+    char *rest_stash;
+    int i;
+    
+    rest_stash = ft_strchr(stash, '\n') + 1;
+    i = ft_strlen(rest_stash);
+    return(rest_stash);   
+}
 
-static char *ft_read_and_stock_in_stash(int fd)
+char *ft_extract_line_from_stash(char *stash)
+{
+    char *line;
+    char *rest_stash;
+    int len;
+    
+    rest_stash = ft_strchr(stash, '\n') + 1;
+    len = ft_strlen(stash) - ft_strlen(rest_stash) + 1;
+    line = (char *)malloc((len + 1) * sizeof(char));
+    if (!line)
+        return (0);
+    ft_strlcpy(line, stash, len);
+    return(line);  
+}
+
+static char *ft_read_and_stock_in_buff(int fd)
 {
     char    *buff;
-    char    *temp;
-    static char *stash;
     ssize_t nbytes;
-  //  int i;
-    
-    //creo BUFF y relleno con función READ
+
     buff = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
     if (!buff)
         return (0);
-        //READ
     nbytes = read(fd, buff, BUFFER_SIZE);
     if (nbytes == -1)
     {
@@ -33,78 +52,92 @@ static char *ft_read_and_stock_in_stash(int fd)
         return(0);
     }
     buff[nbytes] = '\0';
-    //creo STASH y copio contenido de BUFF
+    return (buff);
+}
+
+static char *ft_read_and_stock_in_stash(int fd)
+{
+    char    *buff;
+    char    *line;
+    static char *stash;
+    ssize_t nbytes;
+    
+   /*  buff = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
+    if (!buff)
+        return (0);
+    nbytes = read(fd, buff, BUFFER_SIZE);
+    if (nbytes == -1)
+    {
+        printf("Error reading file");
+        return(0);
+    }
+    buff[nbytes] = '\0'; */
+    buff = ft_read_and_stock_in_buff(fd);
+    printf("buff = %s\n", buff);
     stash = (char *)malloc((BUFFER_SIZE) * sizeof(char));
     if (!stash)
         return (0);
     ft_strlcpy(stash, buff, BUFFER_SIZE + 1);
-    //detectar si hay '\0' o si estamos al final de la cadena, si no es ninguno de los dos casos, seguir leyendo + concatenando
-//     i = 0;
-
-    while(nbytes > 0)
+    if (ft_strchr(stash, '\n'))
     {
-        nbytes = read(fd, buff, BUFFER_SIZE);
-        temp = ft_strjoin(stash, buff);
-        free(stash);
-        stash = temp;
-        if (ft_strchr(stash, '\n'))
-            break ;
+        line = ft_extract_line_from_stash(stash);
+        stash = ft_stash_clean_for_next_GNL(stash);
+        printf("stash = %s\n", stash);
+        return (line);
     }
-    printf("stash después de WHILE = %s", stash);
-    return(stash);
-
-
-    
-    if (ft_strchr(stash, '\n') == 0 && nbytes > 0 )
-    {   
-        printf ("dentro del IF \n");
-      /*   while (stash[i] != '\0')
+    printf("stash = %s\n", stash);
+    while((nbytes = read(fd, buff, BUFFER_SIZE)) > 0)
+    {
+        if (nbytes == -1)
         {
-            stash = ft_strjoin(stash, buff);
-            printf("después de ft_strjoin, como queda stash = %s", stash);
-            nbytes = read(fd, buff, BUFFER_SIZE);
+            printf("Error reading file");
+            return(0);
         }
-        i++; */
-    } 
-    // que hacer si hay '\0' o si estamos al final de cadena
-    return (stash);
+        stash = ft_strjoin(stash, buff);
+        if (ft_strchr(stash, '\n'))
+            {
+                line = ft_extract_line_from_stash(stash);
+                stash = ft_stash_clean_for_next_GNL(stash);
+                return (line);
+            }
+    }
+    return(stash);
 }
-
-
-
-/* static char *ft_pass_buff_content_to_stash(char *buff)
-{
-    static char *stash;
-
-    stash = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
-    ft_strlcpy(stash, buff, BUFFER_SIZE + 1);
-    printf("salió de ft_strlcpy, buff = %s\n", buff);
-    printf("salió de ft_strlcpy, stash = %s\n", stash);
-    return (stash);
-} */
-
-/* static  char *ft_stash_extract_for_next_GNL()
-
-static char *ft_clean_stash_to_line(char *stash)
- */
-
-
 
 char *get_next_line(int fd)
 {
    char *line;
 
-    printf("BUFFER_SIZE es = %d\n", BUFFER_SIZE);
     line = ft_read_and_stock_in_stash(fd);
     return (line);
 }
 
+/* int main()
+{
+    int fd;
+    char *line;
+
+    fd = open("15char", O_RDONLY);
+    if (fd == -1)
+    {
+        printf("Error opening file");
+        return (1);
+    }
+    while ((line = get_next_line(fd))) // mientras haya líneas para leer
+    {
+        printf("dentro del while\n");
+        printf("%s\n", line); // imprime la línea leída
+        free(line); // libera la memoria reservada por la función get_next_line
+    }
+    close(fd); // cierra el archivo
+    return (0);
+} */
 
 
 int main()
 {
     int fd;
-    char *result;
+    char *line;
 
     fd = open("15char", O_RDONLY);
     if (fd == -1)
@@ -112,9 +145,10 @@ int main()
      printf("Error opening file");
      exit(1);
     }
-    printf("fd = %d\n", fd);
-    result = get_next_line(fd);
-    close(fd);
+    line = get_next_line(fd);
+    printf("%s", line);
+    close (fd);
+    return (0);
 }
 
 
