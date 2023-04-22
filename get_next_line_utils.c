@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crramire <crramire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Cristina <Cristina@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 08:58:08 by Cristina          #+#    #+#             */
-/*   Updated: 2023/04/21 13:18:06 by crramire         ###   ########.fr       */
+/*   Updated: 2023/04/22 23:26:02 by Cristina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,16 @@ char	*ft_strchr(const char *s, int c)
 {
 	char	ccomp;
 
+	//añadido if(!s)
+	//if(!s)
+	//	return (0);
 	ccomp = (char) c;
 	while (*s && *s != ccomp)
 		s++;
 	if (*s == ccomp)
+	{
 		return ((char *)s);
+	}
 	return (0);
 }
 
@@ -58,8 +63,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	size_t	i;
 	size_t	j;
 
-	if (s1 == 0 || s2 == 0)
-		return (0);
+	//if (s1 == 0 || s2 == 0)
+	//	return (0);
 	ccatlen = (ft_strlen(s1) + ft_strlen(s2));
 	ccatstr = malloc(ccatlen + 1);
 	if (ccatstr == 0)
