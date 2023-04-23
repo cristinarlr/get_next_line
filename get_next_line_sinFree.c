@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: Cristina <Cristina@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/23 23:01:46 by Cristina          #+#    #+#             */
-/*   Updated: 2023/04/23 23:13:12 by Cristina         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "get_next_line.h"
 
@@ -22,7 +11,6 @@ char *ft_clean_stash(char *stash)
     }
     rest_stash = ft_strdup(stash);
     rest_stash = ft_strchr(stash, '\n') + 1;
-    free(stash);
     return(rest_stash);      
 }
 
@@ -35,7 +23,9 @@ char *ft_extract_line(char *stash)
     if(!stash)
         return (0);
     if(!ft_strchr(stash, '\n'))
+    {
         return (stash);
+    }
     aux = ft_strchr(stash, '\n') + 1;
     len = ft_strlen(stash) - ft_strlen(aux) + 1;
     line = (char *)malloc((len + 1) * sizeof(char));
@@ -52,34 +42,28 @@ char *ft_get_full_line (int fd, char *stash)
 	
     nbytes = 1;
 	buff = (char *) malloc((BUFFER_SIZE + 1) * sizeof(char));
-	if(!buff)
-        return(0);
+	if(!buff) 
+		return(0);
 	while(nbytes == BUFFER_SIZE || nbytes == 1)
 	{
         nbytes = read(fd, buff, BUFFER_SIZE);
         if (nbytes == -1 || ((nbytes == 0) && ft_strlen(stash) == 0))
          {
-            free (buff);
             return (0);
          }
         buff[nbytes] = '\0';
         stash = ft_strjoin(stash, buff);
         if (nbytes == -1 || ((nbytes == 0) && ft_strlen(stash) == 0))
-        {
-            free (buff);
             return (stash);
-        }
         if (ft_strchr(stash, '\n') || nbytes == 0)
         {
-            free (buff);
             return (stash);
         }
 	}
-    free (buff);
     return (0);
 } 
 
-char *get_next_line(int fd)
+char *get_next_line(fd)
 {
     char *line;
     static char *stash = NULL;
@@ -87,7 +71,9 @@ char *get_next_line(int fd)
     if (fd < 0 || BUFFER_SIZE <= 0)
     	return (NULL);
     if(!stash)
+    {
         stash = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
+    }
     if (!stash)
             return (0);
     stash = ft_get_full_line(fd, stash);
