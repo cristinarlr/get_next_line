@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Cristina <Cristina@student.42.fr>          +#+  +:+       +#+        */
+/*   By: crramire <crramire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 23:01:46 by Cristina          #+#    #+#             */
-/*   Updated: 2023/04/23 23:13:12 by Cristina         ###   ########.fr       */
+/*   Updated: 2023/04/25 11:39:55 by crramire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ char *ft_clean_stash(char *stash)
     }
     rest_stash = ft_strdup(stash);
     rest_stash = ft_strchr(stash, '\n') + 1;
-    free(stash);
     return(rest_stash);      
 }
 

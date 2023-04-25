@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Cristina <Cristina@student.42.fr>          +#+  +:+       +#+        */
+/*   By: crramire <crramire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 08:58:08 by Cristina          #+#    #+#             */
-/*   Updated: 2023/04/22 23:26:02 by Cristina         ###   ########.fr       */
+/*   Updated: 2023/04/25 10:03:09 by crramire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	size_t	i;
 	size_t	j;
 
-	//if (s1 == 0 || s2 == 0)
-	//	return (0);
+	if (s1 == 0 || s2 == 0)
+		return (0);
 	ccatlen = (ft_strlen(s1) + ft_strlen(s2));
 	ccatstr = malloc(ccatlen + 1);
 	if (ccatstr == 0)
