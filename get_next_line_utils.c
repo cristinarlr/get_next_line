@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crramire <crramire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Cristina <Cristina@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 08:58:08 by Cristina          #+#    #+#             */
-/*   Updated: 2023/04/25 10:03:09 by crramire         ###   ########.fr       */
+/*   Updated: 2023/04/26 10:30:14 by Cristina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,6 @@ size_t	ft_strlen(const char *s)
 	while (s[i] != '\0')
 		i++;
 	return (i);
-}
-
-size_t	ft_strlcpy(char	*dst, const char *src, size_t dstsize)
-{
-	size_t	i;
-	size_t	size_src;
-	size_src = BUFFER_SIZE + 1;
-	i = 0;
-	if (dstsize == 0)
-		return (size_src);
-	while (src[i] != '\0' && i < (dstsize - 1))
-	{
-			dst[i] = src[i];
-			i++;
-	}
-	dst[i] = '\0';
-	return (size_src);
 }
 
 char	*ft_strchr(const char *s, int c)
@@ -100,6 +83,27 @@ char	*ft_strdup(const char *s1)
 		ptr[i] = s1[i];
 		i++;
 	}
+	ptr[i] = '\0';
+	return (ptr);
+}
+
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	char	*ptr;
+	size_t	i;
+
+	if (!s)
+		return (0);
+	if (ft_strlen(s) <= start)
+		return (ft_strdup(""));
+	if (ft_strlen(&s[start]) < len)
+		len = ft_strlen(&s[start]);
+	ptr = (char *)malloc(sizeof(char) * (len + 1));
+	if (ptr == NULL)
+		return (ptr);
+	i = 0;
+	while (i < len && s[start])
+		ptr[i++] = s[start++];
 	ptr[i] = '\0';
 	return (ptr);
 }

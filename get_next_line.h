@@ -6,7 +6,7 @@
 /*   By: Cristina <Cristina@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 23:03:16 by Cristina          #+#    #+#             */
-/*   Updated: 2023/04/23 23:05:33 by Cristina         ###   ########.fr       */
+/*   Updated: 2023/04/26 10:27:33 by Cristina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,14 @@
 # include <fcntl.h>
 # include <sys/stat.h>
 
-char	*ft_strchr(const char *s, int c);
-size_t	ft_strlcpy(char	*dst, const char *src, size_t dstsize);
-char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlen(const char *s);
+char	*ft_strchr(const char *s, int c);
+char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strdup(const char *s1);
 char    *get_next_line(int fd);
-char    *ft_get_full_line (int fd, char *stash);
-char    *ft_extract_line(char *stash);
-char    *ft_clean_stash(char *stash);
+char	*ft_read_and_stock(int fd, char *stash);
+char	*ft_extract_line(char *stash);
+char	*ft_clean_stash(char *stash);
 
 #endif

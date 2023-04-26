@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_v4.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crramire <crramire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Cristina <Cristina@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 08:47:07 by crramire          #+#    #+#             */
-/*   Updated: 2023/04/25 11:37:42 by crramire         ###   ########.fr       */
+/*   Updated: 2023/04/26 08:47:37 by Cristina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ int main()
     {
         printf("************%s\n---------------------\n", line);
      //   printf("%s", line);
-        free(line);
+      //  free(line);
     }
     close(fd);
     return (0);
