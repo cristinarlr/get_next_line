@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Cristina <Cristina@student.42.fr>          +#+  +:+       +#+        */
+/*   By: crramire <crramire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 08:58:08 by Cristina          #+#    #+#             */
-/*   Updated: 2023/04/26 10:30:14 by Cristina         ###   ########.fr       */
+/*   Updated: 2023/04/27 13:44:55 by crramire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,14 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-char	*ft_strchr(const char *s, int c)
+char	*ft_strchr(char *s, int c)
 {
 	char	ccomp;
 
-	//añadido if(!s)
-	//if(!s)
-	//	return (0);
+	if (!s)
+	{
+		return (NULL);
+	}
 	ccomp = (char) c;
 	while (*s && *s != ccomp)
 		s++;
@@ -39,7 +40,7 @@ char	*ft_strchr(const char *s, int c)
 	return (0);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*ccatstr;
 	size_t	ccatlen;
@@ -47,11 +48,11 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	size_t	j;
 
 	if (s1 == 0 || s2 == 0)
-		return (0);
+		return (NULL);
 	ccatlen = (ft_strlen(s1) + ft_strlen(s2));
 	ccatstr = malloc(ccatlen + 1);
 	if (ccatstr == 0)
-		return (0);
+		return (NULL);
 	i = 0;
 	while (s1[i] != '\0')
 	{
@@ -61,9 +62,10 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	j = 0;
 	while (s2[j] != '\0')
 	{
-        ccatstr[i++] = s2[j++];
+		ccatstr[i++] = s2[j++];
 	}
 	ccatstr[i] = '\0';
+	free (s1);
 	return (ccatstr);
 }
 
