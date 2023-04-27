@@ -6,7 +6,7 @@
 /*   By: crramire <crramire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 08:58:08 by Cristina          #+#    #+#             */
-/*   Updated: 2023/04/27 13:44:55 by crramire         ###   ########.fr       */
+/*   Updated: 2023/04/27 15:37:50 by crramire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*ft_strchr(char *s, int c)
 	{
 		return ((char *)s);
 	}
-	return (0);
+	return (NULL);
 }
 
 char	*ft_strjoin(char *s1, char *s2)
@@ -51,7 +51,7 @@ char	*ft_strjoin(char *s1, char *s2)
 		return (NULL);
 	ccatlen = (ft_strlen(s1) + ft_strlen(s2));
 	ccatstr = malloc(ccatlen + 1);
-	if (ccatstr == 0)
+	if (!ccatstr)
 		return (NULL);
 	i = 0;
 	while (s1[i] != '\0')
