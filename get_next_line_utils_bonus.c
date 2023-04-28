@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Cristina <Cristina@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/18 08:58:08 by Cristina          #+#    #+#             */
-/*   Updated: 2023/04/28 06:30:59 by Cristina         ###   ########.fr       */
+/*   Created: 2023/04/28 06:31:49 by Cristina          #+#    #+#             */
+/*   Updated: 2023/04/28 06:38:41 by Cristina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 size_t	ft_strlen(const char *s)
 {
@@ -83,7 +83,7 @@ char	*ft_strdup(const char *s1)
 	return (ptr);
 }
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_substr(char *s, unsigned int start, size_t len)
 {
 	char	*ptr;
 	size_t	i;
@@ -95,8 +95,11 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	if (ft_strlen(&s[start]) < len)
 		len = ft_strlen(&s[start]);
 	ptr = (char *)malloc(sizeof(char) * (len + 1));
-	if (ptr == NULL)
-		return (ptr);
+	if (!ptr)
+	{
+		free(s);
+		return (NULL);
+	}
 	i = 0;
 	while (i < len && s[start])
 		ptr[i++] = s[start++];
